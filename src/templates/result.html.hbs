@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <p>The title of the page at {{url}} is: {{title}}</p>
+
+    <h2>Screenshot</h2>
+    <img src="{{screenshot_path}}" alt="Screenshot of the page" style="max-width: 100%;">
+
+    {{#if form_present}}
+        <h2>Form Detected</h2>
+        <h3>Input Fields:</h3>
+        <ul>
+            {{#each form_inputs}}
+                <li>
+                    Name: {{#if this.name}}{{this.name}}{{else}}N/A{{/if}},
+                    ID: {{#if this.id}}{{this.id}}{{else}}N/A{{/if}},
+                    Type: {{#if this.input_type}}{{this.input_type}}{{else}}N/A{{/if}}
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No form detected on the page.</p>
+    {{/if}}
+
+    <h2>URL Scan Results</h2>
+    {{#if url_scan_results}}
+        {{#each url_scan_results}}
+            <ul>
+                <li>
+                    Task Time: {{this.task_time}},
+                    Task URL: <a href="{{this.task_url}}" target="_blank">{{this.task_url}}</a>,
+                    Result URL: <a href="{{this.result_url}}" target="_blank">{{this.result_url}}</a> (UUID: {{this.uuid}})
+                </li>
+            </ul>
+        {{/each}}
+    {{else}}
+        <p>No scan results found for this domain.</p>
+    {{/if}}
+
+    <h2>VirusTotal Score</h2>
+    <p>The VirusTotal score (number of positives) for the domain is: {{virustotal_score}}</p>
+
+    <a href="/">Go back</a>
+</body>
+</html>
